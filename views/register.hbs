@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Login</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			margin: 0;
+			padding: 0;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+			background-color: #f5f5f5;
+			background-image: url('https://ilhadocombu.tur.br/wp-content/uploads/2022/04/cidade-de-belem.jpg'); /* Adicione o caminho para sua imagem de fundo aqui */
+			background-size: cover;
+			background-position: center;
+		}
+
+		.login-container {
+			background-color: #ffffffd7;
+			padding: 40px;
+			border-radius: 8px;
+			box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+			max-width: 400px;
+			width: 100%;
+		}
+
+		.login-container h2 {
+			text-align: center;
+			margin-bottom: 20px;
+			color: #333;
+		}
+
+		.form-group {
+			margin-bottom: 20px;
+			position: relative;
+		}
+
+		.form-group label {
+			font-weight: bold;
+			color: #555;
+		}
+
+		.form-group input {
+			width: calc(100% - 40px);
+			padding: 12px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			box-sizing: border-box;
+			font-size: 16px;
+		}
+
+		.form-group input:focus {
+			outline: none;
+			border-color: #005800;
+		}
+
+		.form-group .clear-input {
+			position: absolute;
+			top: 50%;
+			right: 10px;
+			transform: translateY(-50%);
+			cursor: pointer;
+			color: #999;
+		}
+
+		.forgot-password {
+			text-align: right;
+			font-size: 14px;
+			color: #777;
+			text-decoration: none;
+			display: block;
+			margin-bottom: 20px;
+		}
+
+		.forgot-password:hover {
+			color: #333;
+		}
+
+		.btn {
+			background-color: #006400;
+			color: #fff;
+			border: none;
+			padding: 14px 0;
+			border-radius: 5px;
+			cursor: pointer;
+			width: 100%;
+			font-size: 16px;
+			transition: background-color 0.3s ease;
+		}
+
+		.btn:hover {
+			background-color: #004500;
+		}
+
+		.register-link {
+			text-align: center;
+			margin-top: 20px;
+		}
+
+		.register-link a {
+			color: #006400;
+			text-decoration: none;
+		}
+
+		.register-link a:hover {
+			text-decoration: underline;
+		}
+
+		.login-container h2 {
+			text-align: center;
+			margin-bottom: 20px;
+			color: #333;
+		}
+
+		.social-buttons {
+			margin-top: 20px;
+			display:flex;
+			justify-content: space-between;
+		}
+
+		.social-buttons button {
+			width: 40px;
+			height: 40px;
+			background-color: transparent;
+			border: none;
+			padding: 0;
+			cursor: pointer;
+            margin: 0px;
+		}
+
+		.social-buttons button img {
+			width: 100%;
+			height: 100%;
+		}
+
+		.connect-with {
+			text-align: center;
+			margin-top: 20px;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="login-container">
+		<h2>Bem-vindo!</h2>
+		<form action="/auth/register" method="POST">
+			<div class="form-group">
+				<label for="username">User:</label>
+				<div style="position: relative;">
+					<input type="text" id="username" name="username" required>
+					<i class="fas fa-times-circle clear-input" onclick="clearUsername()"></i>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="password">Senha:</label>
+				<div style="position: relative;">
+					<input type="password" id="password" name="password" required>
+					<i class="fas fa-eye-slash password-toggle" style="position: absolute; top: 50%; right: 10px; transform: translateY(-50%); cursor: pointer; color: #999;" onclick="togglePassword()"></i>
+				</div>
+			</div>		
+	{{#if message}}
+    {{#if success}}
+    <h4 class="alert alert-success mt-2">{{message}}</h4>
+    {{else}}
+        <h4 class="alert alert-danger mt-2">{{message}}</h4>
+    {{/if}}
+{{/if}}
+
+
+
+			<a href="#" class="forgot-password">Esqueceu a senha?</a>
+			<button type="submit" class="btn" >Registre-se</button>
+		</form>
+		<div class="connect-with">
+			<p>Ou conecte-se com</p>
+		</div>
+		<div class="social-buttons">
+			<button class="btn-google">
+        <img src="/assets/icons8-google-100.png" alt="Google Logo">
+			<button class="btn-apple">
+        <img src="/assets/icons8-apple-100.png" alt="Apple Logo">
+      </button>
+    </button>
+    <button class="btn-facebook">
+        <img src="/assets/icons8-facebook-100.png" alt="Facebook Logo">
+       </button>
+		</div>
+		<div class="register-link">
+			<p>Já possui conta? <a href="/views/login">Login</a></p>
+		</div>
+	</div>
+	<script>
+		function clearUsername() {
+      document.getElementById('username').value = '';
+    }
+
+    function togglePassword() {
+      var passwordInput = document.getElementById('password');
+      var passwordToggle = document.querySelector('.password-toggle');
+
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        passwordToggle.classList.remove('fa-eye-slash');
+        passwordToggle.classList.add('fa-eye');
+      } else {
+        passwordInput.type = 'password';
+        passwordToggle.classList.remove('fa-eye');
+        passwordToggle.classList.add('fa-eye-slash');
+      }
+    }
+
+	
+	</script>
+</body>
+
+</html>
